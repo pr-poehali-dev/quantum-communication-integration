@@ -22,7 +22,7 @@ export default function Login() {
       } else {
         res = await authApi.register(form.email, form.password, form.full_name)
       }
-      if (res.error) { setError(res.error); return }
+      if (res.error) { setError(res.error === 'network_error' ? 'Сервер временно недоступен, попробуйте ещё раз' : res.error); return }
       saveAuth(res.user, res.token)
       navigate(res.user.role === 'admin' ? '/admin' : '/cabinet')
     } catch {
