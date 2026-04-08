@@ -35,6 +35,7 @@ const PhotographyBanner: React.FC = () => {
   const navLinks = [
     { label: "О молодёжи", href: "#about" },
     { label: "Навигатор", href: "#navigator" },
+    { label: "События", href: "#events" },
     { label: "Документы", href: "#documents" },
     { label: "Новости", href: "#news" },
     { label: "Волонтёры", href: "#volunteers" },
@@ -91,6 +92,63 @@ const PhotographyBanner: React.FC = () => {
     { rank: 3, name: "Мария Иванова", hours: 245, badge: "🥉" },
     { rank: 4, name: "Алексей Краснов", hours: 198, badge: "⭐" },
     { rank: 5, name: "Екатерина Лебедь", hours: 176, badge: "⭐" },
+  ]
+
+  const events = [
+    {
+      date: { day: "19", month: "АПР" },
+      title: "Форум молодёжных инициатив",
+      desc: "Районный форум для активной молодёжи. Презентации проектов, нетворкинг, мастер-классы от экспертов.",
+      location: "Чегдомын, ДК «Горняк»",
+      category: "Форум",
+      categoryColor: "#d33682",
+      time: "10:00",
+    },
+    {
+      date: { day: "25", month: "АПР" },
+      title: "Открытый чемпионат по волейболу",
+      desc: "Соревнования среди молодёжных команд поселений Верхнебуреинского района. Регистрация команд до 20 апреля.",
+      location: "Чегдомын, спорткомплекс",
+      category: "Спорт",
+      categoryColor: "#268bd2",
+      time: "12:00",
+    },
+    {
+      date: { day: "01", month: "МАЙ" },
+      title: "Субботник «Чистый район»",
+      desc: "Волонтёрская акция по уборке и благоустройству территорий. Все желающие приглашаются!",
+      location: "Все поселения района",
+      category: "Волонтёрство",
+      categoryColor: "#2aa198",
+      time: "09:00",
+    },
+    {
+      date: { day: "15", month: "МАЙ" },
+      title: "День молодёжного предпринимательства",
+      desc: "Встреча молодых предпринимателей, презентации стартапов и консультации по грантовой поддержке.",
+      location: "Чегдомын, Администрация района",
+      category: "Бизнес",
+      categoryColor: "#cb4b16",
+      time: "14:00",
+    },
+    {
+      date: { day: "22", month: "МАЙ" },
+      title: "Творческий фестиваль «Мы — район»",
+      desc: "Конкурс талантов, музыкальные выступления и арт-инсталляции от молодых творцов района.",
+      location: "Чегдомын, городская площадь",
+      category: "Культура",
+      categoryColor: "#6c71c4",
+      time: "16:00",
+    },
+    {
+      date: { day: "05", month: "ИЮН" },
+      title: "Слёт студентов и выпускников",
+      desc: "Ежегодная встреча студентов и выпускников, уехавших на учёбу. Истории успеха и возможности вернуться.",
+      location: "Чегдомын, парк «Юность»",
+      category: "Образование",
+      categoryColor: "#859900",
+      time: "11:00",
+    },
   ]
 
   const documents = [
@@ -729,6 +787,126 @@ const PhotographyBanner: React.FC = () => {
           white-space: nowrap;
         }
 
+        /* ---- EVENTS ---- */
+        .events-section {
+          background: rgba(0,0,0,0.15);
+        }
+
+        .events-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          margin-top: 60px;
+        }
+
+        .event-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 20px;
+          padding: 28px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+
+        .event-card:hover {
+          border-color: rgba(211,54,130,0.45);
+          transform: translateY(-5px);
+          background: rgba(211,54,130,0.06);
+        }
+
+        .event-top {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+
+        .event-date-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 60px;
+          height: 60px;
+          border-radius: 14px;
+          background: rgba(211,54,130,0.15);
+          border: 1px solid rgba(211,54,130,0.3);
+          flex-shrink: 0;
+        }
+
+        .event-date-day {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 22px;
+          color: #d33682;
+          line-height: 1;
+        }
+
+        .event-date-month {
+          font-family: "Montserrat", sans-serif;
+          font-size: 10px;
+          font-weight: 700;
+          color: rgba(255,255,255,0.5);
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+
+        .event-category-tag {
+          display: inline-block;
+          padding: 5px 12px;
+          border-radius: 20px;
+          font-family: "Montserrat", sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: #002b36;
+        }
+
+        .event-title {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 17px;
+          color: #fff;
+          line-height: 1.4;
+        }
+
+        .event-desc {
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
+          line-height: 1.75;
+          color: rgba(255,255,255,0.55);
+          flex: 1;
+        }
+
+        .event-footer {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding-top: 12px;
+          border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .event-meta-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-family: "Montserrat", sans-serif;
+          font-size: 12px;
+          color: rgba(255,255,255,0.45);
+        }
+
+        .event-meta-icon {
+          font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+          .events-grid { grid-template-columns: 1fr; }
+        }
+
         /* ---- VOLUNTEERS ---- */
         .volunteers-section {
           background: rgba(0,0,0,0.2);
@@ -958,6 +1136,44 @@ const PhotographyBanner: React.FC = () => {
                 <button className="nav-card-btn">
                   Подробнее →
                 </button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="section-divider" />
+
+        {/* EVENTS */}
+        <section id="events" className="youth-section events-section">
+          <div className="section-label">Календарь мероприятий</div>
+          <h2 className="section-title">Ближайшие <span>события</span></h2>
+          <div className="events-grid">
+            {events.map((event) => (
+              <div className="event-card" key={event.title}>
+                <div className="event-top">
+                  <div className="event-date-box">
+                    <span className="event-date-day">{event.date.day}</span>
+                    <span className="event-date-month">{event.date.month}</span>
+                  </div>
+                  <span
+                    className="event-category-tag"
+                    style={{ background: event.categoryColor }}
+                  >
+                    {event.category}
+                  </span>
+                </div>
+                <div className="event-title">{event.title}</div>
+                <div className="event-desc">{event.desc}</div>
+                <div className="event-footer">
+                  <span className="event-meta-item">
+                    <span className="event-meta-icon">📍</span>
+                    {event.location}
+                  </span>
+                  <span className="event-meta-item">
+                    <span className="event-meta-icon">🕐</span>
+                    {event.time}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
