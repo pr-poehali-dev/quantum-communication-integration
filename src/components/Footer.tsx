@@ -1,64 +1,52 @@
-import { Facebook, Instagram, Twitter, Github, Mail, MapPin, Phone } from "lucide-react"
+import { Instagram, Mail, MapPin, Phone } from "lucide-react"
 
 const data = {
-  facebookLink: "https://facebook.com/digitalhub",
-  instaLink: "https://instagram.com/digitalhub",
-  twitterLink: "https://twitter.com/digitalhub",
-  githubLink: "https://github.com/digitalhub",
-  services: {
-    web: "/web-razrabotka",
-    mobile: "/mobilnye-prilozheniya",
-    design: "/ui-ux-dizajn",
-    marketing: "/digital-marketing",
-  },
-  about: {
-    story: "/o-nas",
-    team: "/komanda",
-    portfolio: "/portfolio",
-    careers: "/vakansii",
+  instaLink: "https://instagram.com/molodezh_vbr",
+  vkLink: "https://vk.com/molodezh_vbr",
+  nav: {
+    about: "#about",
+    navigator: "#navigator",
+    documents: "#documents",
+    news: "#news",
+    volunteers: "#volunteers",
   },
   help: {
-    faqs: "/faq",
-    support: "/podderzhka",
-    blog: "/blog",
+    grants: "#navigator",
+    jobs: "#navigator",
+    leisure: "#navigator",
   },
   contact: {
-    email: "hello@digitalhub.ru",
-    phone: "+7 (495) 123-45-67",
-    address: "Москва, Россия",
+    email: "molodezh@vbr.ru",
+    phone: "+7 (42149) 2-00-00",
+    address: "Хабаровский край, Верхнебуреинский район",
   },
   company: {
-    name: "ДиджиталХаб",
+    name: "Молодёжь ВБР",
     description:
-      "Создаём цифровые продукты, которые помогают бизнесу расти. Веб-разработка, мобильные приложения и дизайн под ключ.",
+      "Официальный портал молодёжной политики Верхнебуреинского муниципального района. Гранты, карьера, досуг и активная жизнь.",
   },
 }
 
 const socialLinks = [
-  { icon: Facebook, label: "Facebook", href: data.facebookLink },
   { icon: Instagram, label: "Instagram", href: data.instaLink },
-  { icon: Twitter, label: "Twitter", href: data.twitterLink },
-  { icon: Github, label: "GitHub", href: data.githubLink },
 ]
 
 const aboutLinks = [
-  { text: "О нас", href: data.about.story },
-  { text: "Команда", href: data.about.team },
-  { text: "Портфолио", href: data.about.portfolio },
-  { text: "Вакансии", href: data.about.careers },
+  { text: "О молодёжи", href: data.nav.about },
+  { text: "Навигатор возможностей", href: data.nav.navigator },
+  { text: "Новости", href: data.nav.news },
+  { text: "Рейтинг волонтёров", href: data.nav.volunteers },
 ]
 
 const serviceLinks = [
-  { text: "Веб-разработка", href: data.services.web },
-  { text: "Мобильные приложения", href: data.services.mobile },
-  { text: "UI/UX Дизайн", href: data.services.design },
-  { text: "Digital-маркетинг", href: data.services.marketing },
+  { text: "Грантовые конкурсы", href: data.nav.navigator },
+  { text: "Трудоустройство", href: data.nav.navigator },
+  { text: "Отдых и досуг", href: data.nav.navigator },
 ]
 
 const helpfulLinks = [
-  { text: "FAQ", href: data.help.faqs },
-  { text: "Поддержка", href: data.help.support },
-  { text: "Блог", href: data.help.blog, hasIndicator: true },
+  { text: "Официальные документы", href: data.nav.documents },
+  { text: "Молодёжная политика", href: data.nav.news, hasIndicator: true },
 ]
 
 const contactInfo = [
@@ -396,7 +384,7 @@ export default function Footer() {
           <div className="footer-grid">
             <div className="footer-brand">
               <div className="brand-logo">
-                <div className="brand-icon">DH</div>
+                <div className="brand-icon">МВ</div>
                 <span className="brand-name">{data.company.name}</span>
               </div>
               <p className="brand-description">{data.company.description}</p>
@@ -411,7 +399,7 @@ export default function Footer() {
 
             <div className="footer-links">
               <div className="link-column">
-                <h3>О компании</h3>
+                <h3>Навигация</h3>
                 <ul className="link-list">
                   {aboutLinks.map(({ text, href }) => (
                     <li key={text} className="link-item">
@@ -422,7 +410,7 @@ export default function Footer() {
               </div>
 
               <div className="link-column">
-                <h3>Услуги</h3>
+                <h3>Возможности</h3>
                 <ul className="link-list">
                   {serviceLinks.map(({ text, href }) => (
                     <li key={text} className="link-item">
@@ -433,7 +421,7 @@ export default function Footer() {
               </div>
 
               <div className="link-column">
-                <h3>Ресурсы</h3>
+                <h3>Документы</h3>
                 <ul className="link-list">
                   {helpfulLinks.map(({ text, href, hasIndicator }) => (
                     <li key={text} className="link-item">
@@ -470,7 +458,7 @@ export default function Footer() {
 
           <div className="footer-bottom">
             <p className="copyright">
-              2025 <a href="https://poehali.dev">poehali.dev</a>
+              © 2026 Молодёжь Верхнебуреинского района
             </p>
             <div className="footer-legal">
               <a href="/privacy">Политика конфиденциальности</a>

@@ -6,7 +6,7 @@ const PhotographyBanner: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
 
-  const texts = ["БИЗНЕС.", "БРЕНДЫ."]
+  const texts = ["ГРАНТЫ.", "КАРЬЕРУ.", "ОТДЫХ.", "БУДУЩЕЕ."]
 
   useEffect(() => {
     const typeSpeed = isDeleting ? 40 : 100
@@ -32,10 +32,86 @@ const PhotographyBanner: React.FC = () => {
     return () => clearTimeout(timer)
   }, [currentText, currentIndex, isDeleting, texts])
 
+  const navLinks = [
+    { label: "О молодёжи", href: "#about" },
+    { label: "Навигатор", href: "#navigator" },
+    { label: "Документы", href: "#documents" },
+    { label: "Новости", href: "#news" },
+    { label: "Волонтёры", href: "#volunteers" },
+  ]
+
+  const navigatorCards = [
+    {
+      icon: "🏆",
+      title: "Грантовые конкурсы",
+      description: "Финансирование твоих идей и проектов. Найди подходящий конкурс и выиграй грант на реализацию мечты.",
+      tag: "Гранты",
+      color: "#d33682",
+    },
+    {
+      icon: "💼",
+      title: "Трудоустройство",
+      description: "Вакансии, стажировки и первая работа в Верхнебуреинском районе. Строй карьеру рядом с домом.",
+      tag: "Карьера",
+      color: "#268bd2",
+    },
+    {
+      icon: "🎯",
+      title: "Отдых и досуг",
+      description: "Спорт, творчество, путешествия и активный отдых для молодёжи района. Жизнь ярче вместе!",
+      tag: "Досуг",
+      color: "#2aa198",
+    },
+  ]
+
+  const newsItems = [
+    {
+      date: "05 апр 2026",
+      category: "Конкурс",
+      title: "Открыт приём заявок на грантовый конкурс «Молодёжь района»",
+      desc: "До 30 апреля принимаются заявки от молодёжных объединений на получение грантов.",
+    },
+    {
+      date: "01 апр 2026",
+      category: "Событие",
+      title: "Форум молодёжных инициатив в Чегдомыне",
+      desc: "Собери команду и представь свой проект на районном форуме молодёжных инициатив.",
+    },
+    {
+      date: "28 мар 2026",
+      category: "Программа",
+      title: "Новые вакансии для молодых специалистов",
+      desc: "Работодатели района приглашают молодых специалистов в сфере IT, медицины и образования.",
+    },
+  ]
+
+  const volunteers = [
+    { rank: 1, name: "Анна Соколова", hours: 312, badge: "🥇" },
+    { rank: 2, name: "Дмитрий Петров", hours: 278, badge: "🥈" },
+    { rank: 3, name: "Мария Иванова", hours: 245, badge: "🥉" },
+    { rank: 4, name: "Алексей Краснов", hours: 198, badge: "⭐" },
+    { rank: 5, name: "Екатерина Лебедь", hours: 176, badge: "⭐" },
+  ]
+
+  const documents = [
+    { title: "Стратегия молодёжной политики района до 2030 года", type: "PDF", date: "2024" },
+    { title: "Положение о молодёжном совете", type: "DOCX", date: "2024" },
+    { title: "Программа «Активная молодёжь» на 2025–2027 гг.", type: "PDF", date: "2025" },
+    { title: "Порядок проведения грантовых конкурсов", type: "PDF", date: "2025" },
+  ]
+
+  const particles = Array.from({ length: 12 }, (_, i) => ({
+    id: i,
+    size: Math.random() * 6 + 2,
+    left: Math.random() * 100,
+    duration: Math.random() * 15 + 10,
+    delay: Math.random() * 5,
+  }))
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Inter:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=Inter:wght@400;500&display=swap');
 
         .photography-banner,
         .photography-banner * {
@@ -49,22 +125,68 @@ const PhotographyBanner: React.FC = () => {
           background-size: cover;
           background-repeat: no-repeat;
           overflow-x: hidden;
-          min-height: 100vh;
           width: 100%;
         }
 
-        .photography-banner *::selection {
-          background-color: rgba(241, 231, 40, 0.2);
-          color: #ffffff;
+        /* ---- NAV ---- */
+        .youth-nav {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 20px 40px;
+          background: rgba(0,43,54,0.85);
+          backdrop-filter: blur(12px);
+          border-bottom: 1px solid rgba(211,54,130,0.2);
         }
 
+        .nav-logo {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 18px;
+          color: #fff;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        .nav-logo span {
+          color: #d33682;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: 32px;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .nav-links a {
+          font-family: "Montserrat", sans-serif;
+          font-size: 14px;
+          color: rgba(255,255,255,0.75);
+          text-decoration: none;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+          transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+          color: #d33682;
+        }
+
+        /* ---- HERO ---- */
         .info-section {
           height: 100vh;
           min-height: 780px;
-          padding: 0 0 0 30px;
+          padding: 0 60px;
           display: flex;
           align-items: center;
-          justify-content: flex-end;
+          justify-content: space-between;
           position: relative;
           z-index: 1;
           user-select: none;
@@ -89,6 +211,7 @@ const PhotographyBanner: React.FC = () => {
         .left-part {
           padding: 20px 0 0;
           overflow: hidden;
+          max-width: 60%;
         }
 
         .left-part h1 {
@@ -96,8 +219,8 @@ const PhotographyBanner: React.FC = () => {
           color: #fff;
           font-family: "Montserrat", sans-serif;
           font-weight: 700;
-          font-size: clamp(48px, 12vw, 160px);
-          line-height: 0.75;
+          font-size: clamp(36px, 8vw, 110px);
+          line-height: 0.85;
           font-style: normal;
           text-transform: uppercase;
         }
@@ -105,7 +228,7 @@ const PhotographyBanner: React.FC = () => {
         .left-part h1 .text {
           color: #d33682;
           display: block;
-          height: clamp(100px, 15vw, 120px);
+          height: clamp(80px, 10vw, 120px);
         }
 
         .left-part h1 .d-flex {
@@ -119,22 +242,14 @@ const PhotographyBanner: React.FC = () => {
           animation: slideUp 0.3s ease-out forwards;
         }
 
-        .typed-cursor {
-          display: none !important;
-        }
-
         @keyframes slideUp {
-          from {
-            transform: translateY(-515px);
-          }
-          to {
-            transform: translateY(0);
-          }
+          from { transform: translateY(-515px); }
+          to { transform: translateY(0); }
         }
 
         .left-part p {
-          width: 72%;
-          margin: 20px 0 0;
+          width: 80%;
+          margin: 24px 0 0;
           color: #fff;
           font-size: 16px;
           font-style: normal;
@@ -144,11 +259,29 @@ const PhotographyBanner: React.FC = () => {
           opacity: 0.8;
         }
 
+        .hero-badges {
+          display: flex;
+          gap: 12px;
+          margin-top: 32px;
+          flex-wrap: wrap;
+        }
+
+        .hero-badge {
+          padding: 8px 18px;
+          border-radius: 30px;
+          border: 1px solid rgba(211,54,130,0.5);
+          color: rgba(255,255,255,0.8);
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
+          font-weight: 500;
+          background: rgba(211,54,130,0.1);
+        }
+
         .book-link {
           margin: 40px 0 0;
           padding: 0;
           border: 0;
-          font-size: 56px;
+          font-size: clamp(32px, 5vw, 56px);
           line-height: 1;
           color: #f1f1f1;
           letter-spacing: 0.25px;
@@ -162,6 +295,7 @@ const PhotographyBanner: React.FC = () => {
           position: relative;
           text-decoration: none;
           cursor: pointer;
+          background: none;
         }
 
         .book-link .linktext {
@@ -221,13 +355,8 @@ const PhotographyBanner: React.FC = () => {
           right: 0;
         }
 
-        .book-link:hover .arrow::before {
-          width: 65%;
-        }
-
-        .book-link:hover .arrow::after {
-          height: 65%;
-        }
+        .book-link:hover .arrow::before { width: 65%; }
+        .book-link:hover .arrow::after { height: 65%; }
 
         .book-link .arrow span {
           background-color: #d33682;
@@ -237,11 +366,10 @@ const PhotographyBanner: React.FC = () => {
           transform: rotate(-45deg) translate(-3px, -1px);
           transform-origin: right top;
           border-radius: 30px;
-          position: relative;
-          transition: all ease-in-out 0.35s;
           position: absolute;
           top: 0;
           left: 0;
+          transition: all ease-in-out 0.35s;
         }
 
         .book-link .arrow span::before {
@@ -254,41 +382,50 @@ const PhotographyBanner: React.FC = () => {
           position: absolute;
         }
 
-        .right-part {
-          background-color: transparent;
-          height: 588px;
-          width: 588px;
-          margin: 0 0 0 auto;
-          margin-right: -14px;
-          display: block;
-          position: relative;
-          z-index: 1;
+        /* stats panel */
+        .hero-stats {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          align-items: flex-end;
           flex-shrink: 0;
         }
 
-        .right-part::before {
-          content: "";
-          border-radius: 197.5px 0px;
-          opacity: 0.4;
-          background: #d33682;
-          filter: blur(112px);
-          height: 35%;
-          width: 55%;
-          position: absolute;
-          top: 50%;
-          right: 33%;
-          transform: translate(50%, -50%);
-          z-index: -1;
+        .stat-card {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(211,54,130,0.3);
+          border-radius: 16px;
+          padding: 20px 28px;
+          text-align: center;
+          backdrop-filter: blur(10px);
+          min-width: 150px;
         }
 
+        .stat-number {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 42px;
+          color: #d33682;
+          line-height: 1;
+        }
+
+        .stat-label {
+          font-family: "Montserrat", sans-serif;
+          font-size: 12px;
+          color: rgba(255,255,255,0.6);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-top: 6px;
+        }
+
+        /* particles */
         .particles-container {
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
           overflow: hidden;
           z-index: 0;
+          pointer-events: none;
         }
 
         .particle {
@@ -299,735 +436,605 @@ const PhotographyBanner: React.FC = () => {
           animation: float linear infinite;
         }
 
-        .particle:nth-child(odd) {
-          background: rgba(203, 75, 22, 0.4);
-        }
-
-        .particle:nth-child(3n) {
-          background: rgba(255, 255, 255, 0.2);
-        }
+        .particle:nth-child(odd) { background: rgba(203, 75, 22, 0.4); }
+        .particle:nth-child(3n) { background: rgba(255, 255, 255, 0.2); }
 
         @keyframes float {
-          0% {
-            transform: translateX(-100px) translateY(0px) rotate(0deg);
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(360deg);
-            opacity: 0;
-          }
+          0% { transform: translateY(100vh) scale(0); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-100px) scale(1); opacity: 0; }
         }
 
-        .bg-line {
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 50%;
-          height: 85px;
-          z-index: -1;
-          overflow: hidden;
-          display: flex;
-          display: -webkit-flex;
-          white-space: nowrap;
-        }
-
-        .bg-line img {
+        /* ---- SECTIONS ---- */
+        .youth-section {
+          padding: 100px 60px;
           position: relative;
-          flex-shrink: 0;
-          -webkit-flex-shrink: 0;
-          animation: 26s linear infinite;
         }
 
-        .bg-line img:nth-child(1) {
-          animation-name: first-text;
-        }
-
-        .bg-line img:nth-child(2) {
-          animation-name: second-text;
-        }
-
-        @keyframes first-text {
-          50% {
-            transform: translateX(-100%);
-            opacity: 1;
-          }
-          50.05% {
-            opacity: 0;
-          }
-          50.1% {
-            transform: translateX(100%);
-            opacity: 1;
-          }
-          100% {
-            transform: translateX(0%);
-          }
-        }
-
-        @keyframes second-text {
-          50% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(-200%);
-          }
-          0% {
-            transform: translateX(0%);
-          }
-        }
-
-        .bg-dash-circle {
-          position: absolute;
-          bottom: -35px;
-          right: -13px;
-          z-index: -1;
-          width: 180px;
-          aspect-ratio: 1/1;
-        }
-
-        .bg-dash-circle img {
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-          object-position: center center;
-          animation: circle-rotate 18s linear infinite;
-        }
-
-        @keyframes circle-rotate {
-          0% {
-            transform: rotate(0);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-
-        .hero-image {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 80%;
-          height: auto;
-          z-index: 2;
-          border-radius: 12px;
-          opacity: 0.9;
-        }
-
-        @media screen and (min-width: 1500px) {
-          .info-section {
-            padding-left: 120px;
-          }
-        }
-
-        @media screen and (min-width: 1400px) {
-          .info-section {
-            padding-left: 100px;
-          }
-        }
-
-        @media screen and (max-width: 1199px) {
-          .bg-line {
-            height: 68px;
-          }
-          .right-part {
-            height: 400px;
-            width: 400px;
-          }
-          .right-part .d-flex {
-            gap: 20px;
-          }
-          .bg-dash-circle {
-            width: 130px;
-          }
-        }
-
-        @media screen and (max-width: 767px) {
-          .photography-banner {
-            overflow-x: hidden;
-          }
-
-          .info-section {
-            display: block;
-            padding: 0;
-            overflow: visible;
-            min-height: auto;
-            height: auto;
-          }
-
-          .bg-line {
-            height: 52px;
-          }
-
-          .left-part {
-            padding: 40px 16px 60px;
-            overflow: visible;
-          }
-
-          .right-part {
-            height: 334px;
-            width: 334px;
-            margin: 0 auto;
-            margin-right: auto;
-          }
-
-          .left-part h1 .text {
-            height: 88px;
-          }
-
-          .left-part p {
-            font-size: 12px;
-            width: 96%;
-          }
-
-          .bg-dash-circle {
-            width: 80px;
-          }
-        }
-
-        .features-section {
-          padding: 100px 30px;
-          background-color: #073642;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .features-section::before {
-          content: "";
-          border-radius: 197.5px 0px;
-          opacity: 0.3;
-          background: #d33682;
-          filter: blur(140px);
-          height: 40%;
-          width: 40%;
-          position: absolute;
-          top: 20%;
-          right: -20%;
-          z-index: -1;
-        }
-
-        .features-container {
-          max-width: 1400px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 60px;
-          align-items: center;
-        }
-
-        .features-content h2 {
-          color: #fff;
+        .section-label {
           font-family: "Montserrat", sans-serif;
+          font-size: 13px;
           font-weight: 700;
-          font-size: clamp(60px, 8vw, 120px);
-          line-height: 0.9;
-          margin: 0 0 30px;
+          color: #d33682;
           text-transform: uppercase;
+          letter-spacing: 3px;
+          margin-bottom: 16px;
         }
 
-        .features-content h2 .highlight {
+        .section-title {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: clamp(32px, 5vw, 60px);
+          color: #fff;
+          line-height: 1.1;
+          margin: 0 0 24px;
+        }
+
+        .section-title span {
           color: #d33682;
         }
 
-        .features-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
+        .section-desc {
+          font-family: "Montserrat", sans-serif;
+          font-size: 16px;
+          line-height: 1.9;
+          color: rgba(255,255,255,0.7);
+          max-width: 600px;
         }
 
-        .feature-item {
-          padding: 25px 0;
-          border-bottom: 1px solid #333;
-          display: flex;
+        /* ---- ABOUT ---- */
+        .about-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
           align-items: center;
+          margin-top: 60px;
+        }
+
+        .about-facts {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
           gap: 20px;
         }
 
-        .feature-icon {
-          width: 50px;
-          height: 50px;
-          background: #d33682;
-          border-radius: 50%;
+        .fact-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          padding: 28px;
+          transition: border-color 0.3s;
+        }
+
+        .fact-card:hover {
+          border-color: rgba(211,54,130,0.5);
+        }
+
+        .fact-icon {
+          font-size: 32px;
+          margin-bottom: 12px;
+        }
+
+        .fact-value {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 900;
+          font-size: 36px;
+          color: #d33682;
+          line-height: 1;
+        }
+
+        .fact-name {
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
+          color: rgba(255,255,255,0.6);
+          margin-top: 6px;
+        }
+
+        /* ---- NAVIGATOR ---- */
+        .navigator-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+          margin-top: 60px;
+        }
+
+        .nav-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 20px;
+          padding: 36px;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+
+        .nav-card:hover {
+          border-color: rgba(211,54,130,0.5);
+          transform: translateY(-6px);
+          background: rgba(211,54,130,0.08);
+        }
+
+        .nav-card-icon {
+          font-size: 48px;
+          margin-bottom: 20px;
+        }
+
+        .nav-card-tag {
+          display: inline-block;
+          padding: 5px 14px;
+          border-radius: 30px;
+          font-family: "Montserrat", sans-serif;
+          font-size: 12px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 16px;
+          color: #002b36;
+        }
+
+        .nav-card-title {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 22px;
+          color: #fff;
+          margin-bottom: 14px;
+          line-height: 1.3;
+        }
+
+        .nav-card-desc {
+          font-family: "Montserrat", sans-serif;
+          font-size: 14px;
+          line-height: 1.8;
+          color: rgba(255,255,255,0.6);
+        }
+
+        .nav-card-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 24px;
+          font-family: "Montserrat", sans-serif;
+          font-size: 14px;
+          font-weight: 700;
+          color: #d33682;
+          text-decoration: none;
+          transition: gap 0.3s;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+        }
+
+        .nav-card-btn:hover { gap: 14px; }
+
+        /* ---- NEWS ---- */
+        .news-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          margin-top: 60px;
+        }
+
+        .news-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          padding: 28px;
+          transition: all 0.3s;
+        }
+
+        .news-card:hover {
+          border-color: rgba(211,54,130,0.4);
+          transform: translateY(-4px);
+        }
+
+        .news-meta {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+
+        .news-category {
+          background: rgba(211,54,130,0.2);
+          color: #d33682;
+          padding: 4px 12px;
+          border-radius: 20px;
+          font-family: "Montserrat", sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        .news-date {
+          font-family: "Montserrat", sans-serif;
+          font-size: 12px;
+          color: rgba(255,255,255,0.4);
+        }
+
+        .news-title {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 17px;
+          color: #fff;
+          line-height: 1.4;
+          margin-bottom: 12px;
+        }
+
+        .news-desc {
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
+          line-height: 1.7;
+          color: rgba(255,255,255,0.55);
+        }
+
+        /* ---- DOCUMENTS ---- */
+        .docs-list {
+          margin-top: 50px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .doc-item {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 14px;
+          padding: 20px 28px;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+
+        .doc-item:hover {
+          border-color: rgba(211,54,130,0.4);
+          background: rgba(211,54,130,0.06);
+        }
+
+        .doc-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 10px;
+          background: rgba(211,54,130,0.2);
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 20px;
-          font-weight: bold;
-          color: #002b36;
           flex-shrink: 0;
         }
 
-        .feature-text h3 {
-          color: #fff;
-          font-family: "Montserrat";
-          font-size: 18px;
-          margin: 0 0 8px;
-          text-transform: uppercase;
-        }
+        .doc-info { flex: 1; }
 
-        .feature-text p {
-          color: #aaa;
-          font-family: "Inter", sans-serif;
-          font-size: 14px;
-          margin: 0;
-          line-height: 1.6;
-        }
-
-        .testimonials-section {
-          padding: 100px 30px;
-          background-color: #002b36;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .testimonials-section::before {
-          content: "";
-          border-radius: 197.5px 0px;
-          opacity: 0.4;
-          background: #d33682;
-          filter: blur(120px);
-          height: 50%;
-          width: 30%;
-          position: absolute;
-          top: 50%;
-          left: -15%;
-          transform: translateY(-50%);
-          z-index: -1;
-        }
-
-        .testimonials-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          text-align: center;
-        }
-
-        .testimonials-title {
-          color: #fff;
+        .doc-title {
           font-family: "Montserrat", sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          color: #fff;
+          margin-bottom: 4px;
+        }
+
+        .doc-meta {
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
+          color: rgba(255,255,255,0.4);
+        }
+
+        .doc-download {
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
           font-weight: 700;
-          font-size: clamp(60px, 8vw, 100px);
-          line-height: 0.9;
-          margin: 0 0 80px;
-          text-transform: uppercase;
+          color: #d33682;
+          white-space: nowrap;
         }
 
-        .testimonials-marquee {
-          display: flex;
-          animation: scroll 30s linear infinite;
-          gap: 40px;
-          width: max-content;
+        /* ---- VOLUNTEERS ---- */
+        .volunteers-section {
+          background: rgba(0,0,0,0.2);
         }
 
-        .testimonials-marquee:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .testimonial-card {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid #333;
+        .volunteers-table {
+          margin-top: 50px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.1);
           border-radius: 20px;
-          padding: 40px 30px;
-          position: relative;
-          backdrop-filter: blur(10px);
-          width: 400px;
-          flex-shrink: 0;
-        }
-
-        .testimonial-quote {
-          color: #fff;
-          font-family: "Inter", sans-serif;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 1.8;
-          margin: 0 0 30px;
-          font-style: italic;
-        }
-
-        .testimonial-author {
-          display: flex;
-          font-family: "Inter", sans-serif;
-          align-items: center;
-          gap: 15px;
-        }
-
-        .author-avatar {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          background: #d33682;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: bold;
-          color: #002b36;
-        }
-
-        .author-info h4 {
-          color: #cb4b16;
-          font-family: "Inter", sans-serif;
-          font-size: 14px;
-          margin: 0;
-          text-transform: uppercase;
-        }
-
-        .author-info p {
-          color: #aaa;
-          font-family: "Inter", sans-serif;
-          font-size: 12px;
-          margin: 5px 0 0;
-        }
-
-        .cta-section {
-          padding: 120px 30px;
-          background-color: #073642;
-          position: relative;
           overflow: hidden;
         }
 
-        .cta-section::before {
-          content: "";
-          border-radius: 197.5px 0px;
-          opacity: 0.6;
-          background: #d33682;
-          filter: blur(180px);
-          height: 60%;
-          width: 80%;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: -1;
+        .vol-header {
+          display: grid;
+          grid-template-columns: 80px 1fr 180px 100px;
+          padding: 16px 28px;
+          background: rgba(211,54,130,0.1);
+          border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .cta-container {
-          max-width: 800px;
-          margin: 0 auto;
+        .vol-header-cell {
+          font-family: "Montserrat", sans-serif;
+          font-size: 12px;
+          font-weight: 700;
+          color: rgba(255,255,255,0.5);
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
 
-        .cta-title {
+        .vol-row {
+          display: grid;
+          grid-template-columns: 80px 1fr 180px 100px;
+          padding: 20px 28px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          align-items: center;
+          transition: background 0.3s;
+        }
+
+        .vol-row:last-child { border-bottom: none; }
+        .vol-row:hover { background: rgba(211,54,130,0.05); }
+
+        .vol-rank {
+          font-family: "Montserrat", sans-serif;
+          font-size: 28px;
+        }
+
+        .vol-name {
+          font-family: "Montserrat", sans-serif;
+          font-weight: 600;
+          font-size: 16px;
           color: #fff;
+        }
+
+        .vol-hours {
           font-family: "Montserrat", sans-serif;
           font-weight: 700;
-          font-size: clamp(80px, 12vw, 160px);
-          line-height: 0.8;
-          margin: 0 0 30px;
-          text-transform: uppercase;
-        }
-
-        .cta-subtitle {
-          color: #d33682;
-          font-family: "Montserrat";
-          font-size: 26px;
-          line-height: 1.6;
-          margin: 0 0 50px;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .cta-buttons {
-          display: flex;
-          gap: 30px;
-          justify-content: center;
-          flex-wrap: wrap;
-        }
-
-        .cta-button {
-          padding: 18px 40px;
-          background: #d33682;
-          color: #002b36;
-          text-decoration: none;
-          font-family: "Montserrat";
-          font-size: 16px;
-          font-weight: bold;
-          text-transform: uppercase;
-          border-radius: 50px;
-          transition: all 0.3s ease;
-          border: 2px solid #d33682;
-        }
-
-        .cta-button:hover {
-          background: transparent;
+          font-size: 18px;
           color: #d33682;
         }
 
-        .cta-button.secondary {
-          background: transparent;
-          color: #fff;
-          border: 2px solid #fff;
+        .vol-hours span {
+          font-size: 12px;
+          color: rgba(255,255,255,0.4);
+          font-weight: 400;
+          margin-left: 4px;
         }
 
-        .cta-button.secondary:hover {
-          background: transparent;
-          color: #d33682;
-          border: 2px solid #d33682;
+        .vol-progress-bar {
+          height: 6px;
+          background: rgba(255,255,255,0.1);
+          border-radius: 3px;
+          overflow: hidden;
         }
 
-        @media screen and (max-width: 1199px) {
-          .features-section,
-          .testimonials-section,
-          .cta-section {
-            padding: 80px 20px;
-          }
-          .features-container {
-            gap: 40px;
-          }
-          .testimonials-marquee {
-            gap: 30px;
-          }
-          .cta-buttons {
-            gap: 20px;
-          }
+        .vol-progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #d33682, #268bd2);
+          border-radius: 3px;
         }
 
-        @media screen and (max-width: 767px) {
-          .features-section,
-          .testimonials-section,
-          .cta-section {
-            padding: 60px 16px;
-          }
-          .features-container {
-            grid-template-columns: 1fr;
-            gap: 30px;
-          }
-          .testimonials-marquee {
-            gap: 25px;
-          }
-          .testimonial-card {
-            padding: 30px 20px;
-          }
-          .cta-buttons {
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-          }
-          .cta-button {
-            width: 100%;
-            max-width: 300px;
-          }
+        /* ---- DIVIDER ---- */
+        .section-divider {
+          border: none;
+          border-top: 1px solid rgba(255,255,255,0.08);
+          margin: 0;
+        }
+
+        @media (max-width: 900px) {
+          .info-section { padding: 0 24px; flex-direction: column; justify-content: center; }
+          .left-part { max-width: 100%; }
+          .hero-stats { flex-direction: row; align-items: flex-start; flex-wrap: wrap; }
+          .youth-nav { padding: 16px 24px; }
+          .nav-links { display: none; }
+          .about-grid, .navigator-grid, .news-grid { grid-template-columns: 1fr; }
+          .youth-section { padding: 70px 24px; }
+          .vol-header, .vol-row { grid-template-columns: 60px 1fr 120px; }
+          .vol-row > *:last-child { display: none; }
+          .vol-header > *:last-child { display: none; }
         }
       `}</style>
 
       <div className="photography-banner">
-        <main>
-          <section className="info-section">
-            <div className="left-part">
-              <h1>
-                <span className="d-flex">
-                  {["С", "О", "З", "Д", "А", "Ё", "М"].map((char, index) => (
-                    <span key={index} className="char tracking-tighter" style={{ animationDelay: `${index * 0.08}s` }}>
-                      {char === " " ? "\u00A0" : char}
-                    </span>
-                  ))}
-                </span>
-                <span className="text tracking-tighter">{currentText}</span>
-              </h1>
-              <p className="tracking-widest">
-                Помогаем предпринимателям запускать цифровые продукты быстрее с помощью современных технологий
-              </p>
-              <a href="#cta" className="book-link">
-                <span className="linktext tracking-tighter text-3xl">Начать проект</span>
-                <span className="arrow">
-                  <span></span>
-                </span>
-              </a>
-            </div>
-            <div className="right-part">
-              <div className="particles-container">
-                {Array.from({ length: 20 }, (_, i) => (
-                  <div
-                    key={i}
-                    className="particle"
-                    style={{
-                      width: `${Math.random() * 8 + 4}px`,
-                      height: `${Math.random() * 8 + 4}px`,
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                      animationDuration: `${Math.random() * 20 + 15}s`,
-                      animationDelay: `${Math.random() * 10}s`,
-                    }}
-                  />
+
+        {/* NAV */}
+        <nav className="youth-nav">
+          <div className="nav-logo">Молодёжь <span>ВБР</span></div>
+          <ul className="nav-links">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* HERO */}
+        <section className="info-section">
+          <div className="particles-container">
+            {particles.map((p) => (
+              <div
+                key={p.id}
+                className="particle"
+                style={{
+                  width: p.size,
+                  height: p.size,
+                  left: `${p.left}%`,
+                  animationDuration: `${p.duration}s`,
+                  animationDelay: `${p.delay}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="left-part">
+            <h1>
+              <span>НАЙДИ</span>
+              <span>СВОЁ</span>
+              <span className="text d-flex">
+                {currentText.split("").map((char, i) => (
+                  <span key={i} className="char">{char}</span>
                 ))}
-              </div>
-              <div className="bg-line">
-                <img
-                  src="https://www.yudiz.com/codepen/photography-banner/wave.svg"
-                  alt="Line"
-                  style={{ filter: "hue-rotate(280deg) saturate(1.5)" }}
-                />
-                <img
-                  src="https://www.yudiz.com/codepen/photography-banner/wave.svg"
-                  alt="Line"
-                  style={{ filter: "hue-rotate(280deg) saturate(1.5)" }}
-                />
-              </div>
-              <div className="bg-dash-circle">
-                <img
-                  src="https://www.yudiz.com/codepen/photography-banner/dash-circle.svg"
-                  alt="dash-circle"
-                  style={{ filter: "hue-rotate(280deg) saturate(1.5)" }}
-                />
-              </div>
+                <span style={{ color: "#d33682", opacity: 0.7, marginLeft: 2 }}>|</span>
+              </span>
+            </h1>
+            <p>
+              Портал возможностей для молодёжи Верхнебуреинского муниципального района —
+              гранты, карьера, отдых и всё, что нужно для яркой жизни рядом с домом.
+            </p>
+            <div className="hero-badges">
+              <span className="hero-badge">🏆 Гранты и конкурсы</span>
+              <span className="hero-badge">💼 Трудоустройство</span>
+              <span className="hero-badge">🎯 Досуг</span>
             </div>
-          </section>
+            <a className="book-link" href="#navigator">
+              <span className="linktext">Исследовать</span>
+              <span className="arrow">
+                <span />
+              </span>
+            </a>
+          </div>
 
-          <section className="features-section">
-            <div className="features-container">
-              <div className="features-content">
-                <h2>Почему выбирают нас?</h2>
-              </div>
-              <ul className="features-list">
-                <li className="feature-item">
-                  <div className="feature-icon">01</div>
-                  <div className="feature-text">
-                    <h3>Опытная команда</h3>
-                    <p className="font-light tracking-wider">
-                      Более 10 лет опыта в разработке цифровых продуктов для бизнеса любого масштаба
-                    </p>
-                  </div>
-                </li>
-                <li className="feature-item">
-                  <div className="feature-icon">02</div>
-                  <div className="feature-text">
-                    <h3>Современные технологии</h3>
-                    <p className="tracking-wider">
-                      Используем передовые инструменты и фреймворки для создания быстрых и надёжных решений
-                    </p>
-                  </div>
-                </li>
-                <li className="feature-item">
-                  <div className="feature-icon">03</div>
-                  <div className="feature-text">
-                    <h3>Индивидуальный подход</h3>
-                    <p className="tracking-wider">
-                      Каждый проект уникален — мы адаптируем решения под ваши конкретные задачи и цели
-                    </p>
-                  </div>
-                </li>
-                <li className="feature-item">
-                  <div className="feature-icon">04</div>
-                  <div className="feature-text">
-                    <h3>Поддержка 24/7</h3>
-                    <p className="tracking-wider">
-                      Обеспечиваем техническую поддержку и сопровождение на всех этапах работы
-                    </p>
-                  </div>
-                </li>
-              </ul>
+          <div className="hero-stats">
+            <div className="stat-card">
+              <div className="stat-number">14+</div>
+              <div className="stat-label">Программ</div>
             </div>
-          </section>
-
-          <section className="testimonials-section">
-            <div className="testimonials-container">
-              <h2 className="testimonials-title">Отзывы клиентов</h2>
-              <div className="testimonials-marquee">
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "Команда полностью изменила наш подход к цифровому присутствию. Результаты превзошли все ожидания."
-                  </p>
-                  <div className="testimonial-author">
-                    <div className="author-avatar">АС</div>
-                    <div className="author-info">
-                      <h4>Алексей Смирнов</h4>
-                      <p>Директор по развитию</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "Профессиональный подход и внимание к деталям. Запустили проект в рекордные сроки без потери качества."
-                  </p>
-                  <div className="testimonial-author">
-                    <div className="author-avatar">МК</div>
-                    <div className="author-info">
-                      <h4>Мария Козлова</h4>
-                      <p>Основатель стартапа</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "От идеи до запуска — всё прошло гладко. Рекомендую всем, кто ценит качество и скорость."
-                  </p>
-                  <div className="testimonial-author">
-                    <div className="author-avatar">ДВ</div>
-                    <div className="author-info">
-                      <h4>Дмитрий Волков</h4>
-                      <p>Предприниматель</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "Команда полностью изменила наш подход к цифровому присутствию. Результаты превзошли все ожидания."
-                  </p>
-                  <div className="testimonial-author">
-                    <div className="author-avatar">АС</div>
-                    <div className="author-info">
-                      <h4>Алексей Смирнов</h4>
-                      <p>Директор по развитию</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "Профессиональный подход и внимание к деталям. Запустили проект в рекордные сроки без потери качества."
-                  </p>
-                  <div className="testimonial-author">
-                    <div className="author-avatar">МК</div>
-                    <div className="author-info">
-                      <h4>Мария Козлова</h4>
-                      <p>Основатель стартапа</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "От идеи до запуска — всё прошло гладко. Рекомендую всем, кто ценит качество и скорость."
-                  </p>
-                  <div className="testimonial-author">
-                    <div className="author-avatar">ДВ</div>
-                    <div className="author-info">
-                      <h4>Дмитрий Волков</h4>
-                      <p>Предприниматель</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="stat-card">
+              <div className="stat-number">500+</div>
+              <div className="stat-label">Волонтёров</div>
             </div>
-          </section>
+            <div className="stat-card">
+              <div className="stat-number">12</div>
+              <div className="stat-label">Поселений</div>
+            </div>
+          </div>
+        </section>
 
-          <section className="cta-section" id="cta">
-            <div className="cta-container">
-              <h2 className="cta-title text-center">Готовы начать?</h2>
-              <p className="cta-subtitle">
-                Присоединяйтесь к сотням компаний, которые уже трансформировали свой бизнес. Ваш путь к успеху начинается здесь.
+        <hr className="section-divider" />
+
+        {/* ABOUT */}
+        <section id="about" className="youth-section">
+          <div className="section-label">О молодёжи</div>
+          <h2 className="section-title">Молодёжь — сила <span>района</span></h2>
+          <div className="about-grid">
+            <div>
+              <p className="section-desc">
+                Верхнебуреинский район — это место, где каждый молодой человек может реализовать
+                свой потенциал. Мы объединяем активистов, волонтёров, спортсменов и творческих
+                людей для развития родного края.
               </p>
-              <div className="cta-buttons">
-                <a href="#" className="cta-button">
-                  Обсудить проект
-                </a>
-                <a href="#" className="cta-button secondary">
-                  Посмотреть кейсы
-                </a>
-              </div>
+              <p className="section-desc" style={{ marginTop: 20 }}>
+                Молодёжная политика района направлена на поддержку инициатив, создание
+                рабочих мест и формирование комфортной среды для жизни и самореализации.
+              </p>
             </div>
-          </section>
-        </main>
+            <div className="about-facts">
+              {[
+                { icon: "👥", value: "8 000+", name: "молодых людей в районе" },
+                { icon: "🏅", value: "50+", name: "мероприятий в год" },
+                { icon: "💰", value: "3 млн ₽", name: "грантов ежегодно" },
+                { icon: "🤝", name: "активных объединений", value: "20+" },
+              ].map((f) => (
+                <div className="fact-card" key={f.name}>
+                  <div className="fact-icon">{f.icon}</div>
+                  <div className="fact-value">{f.value}</div>
+                  <div className="fact-name">{f.name}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <hr className="section-divider" />
+
+        {/* NAVIGATOR */}
+        <section id="navigator" className="youth-section">
+          <div className="section-label">Навигатор возможностей</div>
+          <h2 className="section-title">Твой путь <span>начинается здесь</span></h2>
+          <div className="navigator-grid">
+            {navigatorCards.map((card) => (
+              <div className="nav-card" key={card.title}>
+                <div className="nav-card-icon">{card.icon}</div>
+                <span className="nav-card-tag" style={{ background: card.color }}>{card.tag}</span>
+                <div className="nav-card-title">{card.title}</div>
+                <div className="nav-card-desc">{card.description}</div>
+                <button className="nav-card-btn">
+                  Подробнее →
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="section-divider" />
+
+        {/* NEWS */}
+        <section id="news" className="youth-section">
+          <div className="section-label">Новости</div>
+          <h2 className="section-title">Молодёжная <span>политика</span></h2>
+          <div className="news-grid">
+            {newsItems.map((item) => (
+              <div className="news-card" key={item.title}>
+                <div className="news-meta">
+                  <span className="news-category">{item.category}</span>
+                  <span className="news-date">{item.date}</span>
+                </div>
+                <div className="news-title">{item.title}</div>
+                <div className="news-desc">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="section-divider" />
+
+        {/* DOCUMENTS */}
+        <section id="documents" className="youth-section">
+          <div className="section-label">Официальные документы</div>
+          <h2 className="section-title">Нормативная <span>база</span></h2>
+          <div className="docs-list">
+            {documents.map((doc) => (
+              <div className="doc-item" key={doc.title}>
+                <div className="doc-icon">📄</div>
+                <div className="doc-info">
+                  <div className="doc-title">{doc.title}</div>
+                  <div className="doc-meta">{doc.type} · {doc.date}</div>
+                </div>
+                <div className="doc-download">Скачать ↓</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="section-divider" />
+
+        {/* VOLUNTEERS */}
+        <section id="volunteers" className="youth-section volunteers-section">
+          <div className="section-label">Волонтёрство</div>
+          <h2 className="section-title">Рейтинг <span>волонтёров</span></h2>
+          <p className="section-desc">Герои нашего района — люди, которые делают мир лучше каждый день.</p>
+          <div className="volunteers-table">
+            <div className="vol-header">
+              <span className="vol-header-cell">Место</span>
+              <span className="vol-header-cell">Имя</span>
+              <span className="vol-header-cell">Часов</span>
+              <span className="vol-header-cell">Прогресс</span>
+            </div>
+            {volunteers.map((v) => (
+              <div className="vol-row" key={v.rank}>
+                <span className="vol-rank">{v.badge}</span>
+                <span className="vol-name">{v.name}</span>
+                <span className="vol-hours">
+                  {v.hours}<span>ч</span>
+                </span>
+                <div className="vol-progress-bar">
+                  <div
+                    className="vol-progress-fill"
+                    style={{ width: `${(v.hours / 312) * 100}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </div>
     </>
   )
