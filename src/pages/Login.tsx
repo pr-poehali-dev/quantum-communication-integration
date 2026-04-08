@@ -118,9 +118,8 @@ export default function Login() {
             <Icon name="ArrowLeft" size={16} /> На главную
           </button>
           <div className="login-logo">
-            <div className="login-logo-icon">МВ</div>
-            <h1>Молодёжь ВБР</h1>
-            <p>Личный кабинет</p>
+            <img src="https://cdn.poehali.dev/projects/2bd4f7a6-eadb-486e-a916-098fef7014b8/bucket/5be3bb63-1298-4d23-affa-f0c8facf365c.png" alt="Молодёжь ВБР" style={{ width: 160, objectFit: 'contain', filter: 'invert(1)' }} />
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, margin: '8px 0 0' }}>Личный кабинет</p>
           </div>
           <div className="login-tabs">
             <button className={`login-tab ${tab === 'login' ? 'active' : ''}`} onClick={() => setTab('login')}>Войти</button>
