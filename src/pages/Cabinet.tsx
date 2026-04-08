@@ -9,7 +9,8 @@ type Tab = 'dashboard' | 'rating' | 'events' | 'contests' | 'profile'
 
 export default function Cabinet() {
   const navigate = useNavigate()
-  const { user } = loadAuth()
+  const [authState] = useState(() => loadAuth())
+  const user = authState.user
   const [tab, setTab] = useState<Tab>('dashboard')
   const [profile, setProfile] = useState<any>(null)
   const [rating, setRating] = useState<any[]>([])

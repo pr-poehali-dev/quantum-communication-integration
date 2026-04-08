@@ -13,7 +13,8 @@ type Tab = 'news' | 'events' | 'documents' | 'volunteers' | 'contests' | 'conten
 
 export default function Admin() {
   const navigate = useNavigate()
-  const { user } = loadAuth()
+  const [authState] = useState(() => loadAuth())
+  const user = authState.user
   const [tab, setTab] = useState<Tab>('news')
   const [data, setData] = useState<Record<string, any[]>>({ news: [], events: [], documents: [], volunteers: [], contests: [] })
   const [siteContent, setSiteContent] = useState<{ key: string; label: string; value: string }[]>([])
@@ -45,13 +46,15 @@ export default function Admin() {
       setData(d => ({ ...d, [t]: Array.isArray(result) ? result : [] }))
     }
     setLoading(false)
-  }, [user])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (!user) { navigate('/login'); return }
     if (user.role !== 'admin') { navigate('/cabinet'); return }
     loadTab(tab)
-  }, [tab, loadTab, navigate, user])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab])
 
   const openCreate = () => { setForm({}); setModal({ open: true, item: null, type: tab }) }
   const openEdit = (item: any) => { setForm({ ...item }); setModal({ open: true, item, type: tab }) }
