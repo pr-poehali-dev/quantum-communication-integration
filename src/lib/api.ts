@@ -6,21 +6,26 @@ const URLS = {
 }
 
 async function call(url: string, body: object, userId?: number) {
-  try {
-    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-    if (userId) headers['X-User-Id'] = String(userId)
-    const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) })
-    const text = await res.text()
+  for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const data = JSON.parse(text)
-      if (typeof data === 'string') return JSON.parse(data)
-      return data
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+      if (userId) headers['X-User-Id'] = String(userId)
+      const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) })
+      if (res.status === 402) return { error: 'Превышен лимит запросов. Попробуйте позже.' }
+      const text = await res.text()
+      try {
+        const data = JSON.parse(text)
+        if (typeof data === 'string') return JSON.parse(data)
+        return data
+      } catch {
+        return { error: 'parse_error' }
+      }
     } catch {
-      return { error: 'parse_error' }
+      if (attempt === 1) return { error: 'network_error' }
+      await new Promise(r => setTimeout(r, 1500))
     }
-  } catch {
-    return { error: 'network_error' }
   }
+  return { error: 'network_error' }
 }
 
 export const auth = {
