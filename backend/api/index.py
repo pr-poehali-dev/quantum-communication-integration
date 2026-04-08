@@ -64,6 +64,12 @@ def handler(event: dict, context) -> dict:
             data = [{'id': r[0], 'title': r[1], 'description': r[2], 'deadline': serialize(r[3]), 'prize': r[4], 'link': r[5]} for r in rows]
             return {'statusCode': 200, 'headers': CORS, 'body': json.dumps(data, ensure_ascii=False)}
 
+        if action == 'site_content':
+            cur.execute("SELECT key, value FROM site_content ORDER BY id ASC")
+            rows = cur.fetchall()
+            data = {r[0]: r[1] for r in rows}
+            return {'statusCode': 200, 'headers': CORS, 'body': json.dumps(data, ensure_ascii=False)}
+
         return {'statusCode': 400, 'headers': CORS, 'body': json.dumps({'error': 'Укажите action'})}
 
     finally:

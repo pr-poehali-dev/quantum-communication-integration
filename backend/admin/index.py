@@ -157,6 +157,44 @@ def handler(event: dict, context) -> dict:
             conn.commit()
             return {'statusCode': 200, 'headers': CORS, 'body': json.dumps({'ok': True})}
 
+        # ---- DELETE ----
+        if action == 'news_delete':
+            cur.execute("DELETE FROM news WHERE id=%s", (body['id'],))
+            conn.commit()
+            return {'statusCode': 200, 'headers': CORS, 'body': json.dumps({'ok': True})}
+
+        if action == 'events_delete':
+            cur.execute("DELETE FROM event_registrations WHERE event_id=%s", (body['id'],))
+            cur.execute("DELETE FROM events WHERE id=%s", (body['id'],))
+            conn.commit()
+            return {'statusCode': 200, 'headers': CORS, 'body': json.dumps({'ok': True})}
+
+        if action == 'docs_delete':
+            cur.execute("DELETE FROM documents WHERE id=%s", (body['id'],))
+            conn.commit()
+            return {'statusCode': 200, 'headers': CORS, 'body': json.dumps({'ok': True})}
+
+        if action == 'contests_delete':
+            cur.execute("DELETE FROM contests WHERE id=%s", (body['id'],))
+            conn.commit()
+            return {'statusCode': 200, 'headers': CORS, 'body': json.dumps({'ok': True})}
+
+        # ---- SITE CONTENT ----
+        if action == 'content_list':
+            cur.execute("SELECT key, label, value FROM site_content ORDER BY id ASC")
+            rows = cur.fetchall()
+            data = [{'key': r[0], 'label': r[1], 'value': r[2]} for r in rows]
+            return {'statusCode': 200, 'headers': CORS, 'body': json.dumps(data, ensure_ascii=False)}
+
+        if action == 'content_update':
+            for item in body.get('items', []):
+                cur.execute(
+                    "UPDATE site_content SET value=%s, updated_at=NOW() WHERE key=%s",
+                    (item['value'], item['key'])
+                )
+            conn.commit()
+            return {'statusCode': 200, 'headers': CORS, 'body': json.dumps({'ok': True})}
+
         return {'statusCode': 400, 'headers': CORS, 'body': json.dumps({'error': 'Неизвестное действие'})}
 
     finally:

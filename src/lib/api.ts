@@ -28,6 +28,7 @@ export const publicApi = {
   events: () => call(URLS.api, { action: 'events' }),
   volunteers: () => call(URLS.api, { action: 'volunteers' }),
   contests: () => call(URLS.api, { action: 'contests' }),
+  siteContent: () => call(URLS.api, { action: 'site_content' }),
 }
 
 export const volunteerApi = {
@@ -43,15 +44,25 @@ export const adminApi = {
   newsList: (userId: number) => call(URLS.admin, { action: 'news_list' }, userId),
   newsCreate: (userId: number, data: object) => call(URLS.admin, { action: 'news_create', ...data }, userId),
   newsUpdate: (userId: number, data: object) => call(URLS.admin, { action: 'news_update', ...data }, userId),
+  newsDelete: (userId: number, id: number) => call(URLS.admin, { action: 'news_delete', id }, userId),
   docsList: (userId: number) => call(URLS.admin, { action: 'docs_list' }, userId),
   docsCreate: (userId: number, data: object) => call(URLS.admin, { action: 'docs_create', ...data }, userId),
   docsUpdate: (userId: number, data: object) => call(URLS.admin, { action: 'docs_update', ...data }, userId),
+  docsDelete: (userId: number, id: number) => call(URLS.admin, { action: 'docs_delete', id }, userId),
   eventsList: (userId: number) => call(URLS.admin, { action: 'events_list' }, userId),
   eventsCreate: (userId: number, data: object) => call(URLS.admin, { action: 'events_create', ...data }, userId),
   eventsUpdate: (userId: number, data: object) => call(URLS.admin, { action: 'events_update', ...data }, userId),
+  eventsDelete: (userId: number, id: number) => call(URLS.admin, { action: 'events_delete', id }, userId),
   volunteersList: (userId: number) => call(URLS.admin, { action: 'volunteers_list' }, userId),
   volunteerUpdate: (userId: number, data: object) => call(URLS.admin, { action: 'volunteer_update', ...data }, userId),
   contestsList: (userId: number) => call(URLS.admin, { action: 'contests_list' }, userId),
   contestsCreate: (userId: number, data: object) => call(URLS.admin, { action: 'contests_create', ...data }, userId),
   contestsUpdate: (userId: number, data: object) => call(URLS.admin, { action: 'contests_update', ...data }, userId),
+  contestsDelete: (userId: number, id: number) => call(URLS.admin, { action: 'contests_delete', id }, userId),
+  contentList: (userId: number) => call(URLS.admin, { action: 'content_list' }, userId),
+  contentUpdate: (userId: number, items: {key: string, value: string}[]) => call(URLS.admin, { action: 'content_update', items }, userId),
+}
+
+export const publicApi2 = {
+  siteContent: () => call(URLS.api, { action: 'site_content' }),
 }

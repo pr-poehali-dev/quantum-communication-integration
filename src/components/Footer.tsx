@@ -1,61 +1,44 @@
-import { Instagram, Mail, MapPin, Phone } from "lucide-react"
-
-const data = {
-  instaLink: "https://instagram.com/molodezh_vbr",
-  vkLink: "https://vk.com/molodezh_vbr",
-  nav: {
-    about: "#about",
-    navigator: "#navigator",
-    documents: "#documents",
-    news: "#news",
-    volunteers: "#volunteers",
-  },
-  help: {
-    grants: "#navigator",
-    jobs: "#navigator",
-    leisure: "#navigator",
-  },
-  contact: {
-    email: "molodezh@vbr.ru",
-    phone: "+7 (42149) 2-00-00",
-    address: "Хабаровский край, Верхнебуреинский район",
-  },
-  company: {
-    name: "Молодёжь ВБР",
-    description:
-      "Официальный портал молодёжной политики Верхнебуреинского муниципального района. Гранты, карьера, досуг и активная жизнь.",
-  },
-}
-
-const socialLinks = [
-  { icon: Instagram, label: "Instagram", href: data.instaLink },
-]
+import { Mail, MapPin, Phone } from "lucide-react"
+import { useEffect, useState } from "react"
+import { publicApi } from "@/lib/api"
 
 const aboutLinks = [
-  { text: "О молодёжи", href: data.nav.about },
-  { text: "Навигатор возможностей", href: data.nav.navigator },
-  { text: "Новости", href: data.nav.news },
-  { text: "Рейтинг волонтёров", href: data.nav.volunteers },
+  { text: "О молодёжи", href: "#about" },
+  { text: "Навигатор возможностей", href: "#navigator" },
+  { text: "Новости", href: "#news" },
+  { text: "Рейтинг волонтёров", href: "#volunteers" },
 ]
 
 const serviceLinks = [
-  { text: "Грантовые конкурсы", href: data.nav.navigator },
-  { text: "Трудоустройство", href: data.nav.navigator },
-  { text: "Отдых и досуг", href: data.nav.navigator },
+  { text: "Грантовые конкурсы", href: "#news" },
+  { text: "Трудоустройство", href: "#events" },
+  { text: "Отдых и досуг", href: "#events" },
 ]
 
 const helpfulLinks = [
-  { text: "Официальные документы", href: data.nav.documents },
-  { text: "Молодёжная политика", href: data.nav.news, hasIndicator: true },
-]
-
-const contactInfo = [
-  { icon: Mail, text: data.contact.email },
-  { icon: Phone, text: data.contact.phone },
-  { icon: MapPin, text: data.contact.address, isAddress: true },
+  { text: "Официальные документы", href: "#documents" },
+  { text: "Молодёжная политика", href: "#news", hasIndicator: true },
+  { text: "Мероприятия", href: "#events" },
+  { text: "Волонтёры", href: "#volunteers" },
 ]
 
 export default function Footer() {
+   
+  const [sc, setSc] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    publicApi.siteContent().then((data: Record<string, string>) => {
+      if (data && !data.error) setSc(data)
+    }).catch(() => {})
+  }, [])
+
+  const email = sc.contacts_email || "molodezh@vbr.ru"
+  const phone = sc.contacts_phone || "+7 (42149) 2-00-00"
+  const address = sc.contacts_address || "Хабаровский край, Верхнебуреинский район"
+  const vkLink = sc.contacts_vk || "https://vk.com/"
+  const tgLink = sc.contacts_telegram || "https://t.me/"
+  const footerText = sc.footer_text || "Официальный портал молодёжной политики Верхнебуреинского муниципального района. Гранты, карьера, досуг и активная жизнь."
+
   return (
     <>
       <style>{`
@@ -64,7 +47,6 @@ export default function Footer() {
           position: relative;
           overflow: hidden;
         }
-
         .ai-footer::before {
           content: "";
           border-radius: 197.5px 0px;
@@ -78,7 +60,6 @@ export default function Footer() {
           left: -25%;
           z-index: 0;
         }
-
         .ai-footer::after {
           content: "";
           border-radius: 197.5px 0px;
@@ -92,7 +73,6 @@ export default function Footer() {
           right: -20%;
           z-index: 0;
         }
-
         .footer-container {
           position: relative;
           z-index: 1;
@@ -100,111 +80,46 @@ export default function Footer() {
           margin: 0 auto;
           padding: 80px 30px 30px;
         }
-
         .footer-grid {
           display: grid;
           grid-template-columns: 1fr 2fr;
           gap: 80px;
           margin-bottom: 60px;
         }
-
-        .footer-brand {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .brand-logo {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          margin-bottom: 30px;
-        }
-
-        .brand-icon {
-          width: 50px;
-          height: 50px;
-          background: #d33682;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 700;
-          font-size: 20px;
-          color: #002b36;
-        }
-
-        .brand-name {
-          font-family: "Montserrat", sans-serif;
-          font-weight: 700;
-          font-size: 28px;
-          color: #ffffff;
-          text-transform: uppercase;
-        }
-
-        .brand-description {
-          font-family: "Montserrat";
-          font-size: 16px;
-          line-height: 1.8;
-          color: #aaa;
-          margin-bottom: 40px;
-          max-width: 400px;
-        }
-
-        .social-links {
-          display: flex;
-          gap: 20px;
-        }
-
+        .footer-brand { display: flex; flex-direction: column; }
+        .brand-logo { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .brand-logo-img { height: 48px; object-fit: contain; }
+        .brand-name { font-family: "Montserrat", sans-serif; font-weight: 700; font-size: 20px; color: #ffffff; text-transform: uppercase; }
+        .brand-description { font-family: "Montserrat"; font-size: 14px; line-height: 1.8; color: #aaa; margin-bottom: 28px; max-width: 380px; }
+        .social-links { display: flex; gap: 12px; }
         .social-link {
-          width: 45px;
-          height: 45px;
-          background: rgba(211, 54, 130, 0.1);
-          border: 1px solid #333;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          padding: 8px 16px;
+          background: rgba(211,54,130,0.1);
+          border: 1px solid rgba(211,54,130,0.3);
+          border-radius: 20px;
           color: #d33682;
           text-decoration: none;
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
+          font-weight: 700;
           transition: all 0.3s ease;
         }
-
-        .social-link:hover {
-          background: #d33682;
-          color: #002b36;
-          transform: translateY(-2px);
-        }
-
-        .footer-links {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 40px;
-        }
-
+        .social-link:hover { background: #d33682; color: #002b36; }
+        .footer-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
         .link-column h3 {
           font-family: "Montserrat", sans-serif;
           font-weight: 700;
-          font-size: 16px;
+          font-size: 14px;
           color: #d33682;
           text-transform: uppercase;
-          margin: 0 0 25px;
+          margin: 0 0 20px;
           letter-spacing: 1px;
         }
-
-        .link-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-
-        .link-item {
-          margin-bottom: 15px;
-        }
-
+        .link-list { list-style: none; padding: 0; margin: 0; }
+        .link-item { margin-bottom: 12px; }
         .link-item a {
           font-family: "Montserrat";
-          font-size: 14px;
+          font-size: 13px;
           color: #aaa;
           text-decoration: none;
           transition: color 0.3s ease;
@@ -212,170 +127,32 @@ export default function Footer() {
           align-items: center;
           gap: 8px;
         }
-
-        .link-item a:hover {
-          color: #ffffff;
-        }
-
-        .contact-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .contact-icon {
-          width: 20px;
-          height: 20px;
-          color: #d33682;
-          flex-shrink: 0;
-        }
-
-        .live-indicator {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .pulse-dot {
-          position: relative;
-          width: 8px;
-          height: 8px;
-        }
-
-        .pulse-dot::before {
-          content: "";
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          background: #d33682;
-          border-radius: 50%;
-          animation: pulse 2s infinite;
-        }
-
-        .pulse-dot::after {
-          content: "";
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          background: #d33682;
-          border-radius: 50%;
-        }
-
+        .link-item a:hover { color: #ffffff; }
+        .contact-item { display: flex; align-items: flex-start; gap: 10px; }
+        .contact-icon { color: #d33682; flex-shrink: 0; margin-top: 2px; }
+        .live-indicator { position: relative; display: inline-flex; align-items: center; gap: 8px; }
+        .pulse-dot { position: relative; width: 8px; height: 8px; flex-shrink: 0; }
+        .pulse-dot::before { content: ""; position: absolute; width: 100%; height: 100%; background: #d33682; border-radius: 50%; animation: pulse 2s infinite; }
+        .pulse-dot::after { content: ""; position: absolute; width: 100%; height: 100%; background: #d33682; border-radius: 50%; }
         @keyframes pulse {
-          0% {
-            transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(211, 54, 130, 0.7);
-          }
-          70% {
-            transform: scale(1);
-            box-shadow: 0 0 0 10px rgba(211, 54, 130, 0);
-          }
-          100% {
-            transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(211, 54, 130, 0);
-          }
+          0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(211,54,130,0.7); }
+          70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(211,54,130,0); }
+          100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(211,54,130,0); }
         }
-
-        .footer-bottom {
-          border-top: 1px solid #333;
-          padding-top: 30px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 20px;
-        }
-
-        .copyright {
-          font-family: "Montserrat";
-          font-size: 14px;
-          color: #aaa;
-        }
-
-        .copyright a {
-          color: #d33682;
-          text-decoration: none;
-          transition: color 0.3s ease;
-        }
-
-        .copyright a:hover {
-          color: #ffffff;
-        }
-
-        .footer-legal {
-          display: flex;
-          gap: 30px;
-        }
-
-        .footer-legal a {
-          font-family: "Montserrat";
-          font-size: 14px;
-          color: #aaa;
-          text-decoration: none;
-          transition: color 0.3s ease;
-        }
-
-        .footer-legal a:hover {
-          color: #ffffff;
-        }
-
+        .footer-bottom { border-top: 1px solid #333; padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .copyright { font-family: "Montserrat"; font-size: 13px; color: #aaa; }
+        .footer-legal { display: flex; gap: 24px; }
+        .footer-legal a { font-family: "Montserrat"; font-size: 13px; color: #aaa; text-decoration: none; transition: color 0.3s ease; }
+        .footer-legal a:hover { color: #fff; }
         @media screen and (max-width: 1199px) {
-          .footer-container {
-            padding: 60px 20px 20px;
-          }
-
-          .footer-grid {
-            gap: 60px;
-          }
-
-          .footer-links {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-          }
+          .footer-container { padding: 60px 20px 20px; }
+          .footer-grid { gap: 40px; }
+          .footer-links { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media screen and (max-width: 767px) {
-          .footer-container {
-            padding: 40px 16px 16px;
-          }
-
-          .footer-grid {
-            grid-template-columns: 1fr;
-            gap: 40px;
-          }
-
-          .footer-links {
-            grid-template-columns: 1fr;
-            gap: 25px;
-          }
-
-          .brand-name {
-            font-size: 24px;
-          }
-
-          .brand-description {
-            font-size: 14px;
-          }
-
-          .social-links {
-            gap: 15px;
-          }
-
-          .social-link {
-            width: 40px;
-            height: 40px;
-          }
-
-          .footer-bottom {
-            flex-direction: column;
-            text-align: center;
-            gap: 15px;
-          }
-
-          .footer-legal {
-            gap: 20px;
-          }
+          .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+          .footer-links { grid-template-columns: 1fr 1fr; gap: 24px; }
+          .footer-bottom { flex-direction: column; text-align: center; gap: 12px; }
         }
       `}</style>
 
@@ -384,16 +161,17 @@ export default function Footer() {
           <div className="footer-grid">
             <div className="footer-brand">
               <div className="brand-logo">
-                <div className="brand-icon">МВ</div>
-                <span className="brand-name">{data.company.name}</span>
+                <img
+                  src="https://cdn.poehali.dev/projects/2bd4f7a6-eadb-486e-a916-098fef7014b8/bucket/5be3bb63-1298-4d23-affa-f0c8facf365c.png"
+                  alt="Молодёжь ВБР"
+                  className="brand-logo-img"
+                />
+                <span className="brand-name">Молодёжь ВБР</span>
               </div>
-              <p className="brand-description">{data.company.description}</p>
+              <p className="brand-description">{footerText}</p>
               <div className="social-links">
-                {socialLinks.map(({ icon: Icon, label, href }) => (
-                  <a key={label} href={href} className="social-link" aria-label={label}>
-                    <Icon size={20} />
-                  </a>
-                ))}
+                <a href={vkLink} className="social-link" target="_blank" rel="noreferrer">ВКонтакте</a>
+                <a href={tgLink} className="social-link" target="_blank" rel="noreferrer">Telegram</a>
               </div>
             </div>
 
@@ -402,9 +180,7 @@ export default function Footer() {
                 <h3>Навигация</h3>
                 <ul className="link-list">
                   {aboutLinks.map(({ text, href }) => (
-                    <li key={text} className="link-item">
-                      <a href={href}>{text}</a>
-                    </li>
+                    <li key={text} className="link-item"><a href={href}>{text}</a></li>
                   ))}
                 </ul>
               </div>
@@ -413,9 +189,7 @@ export default function Footer() {
                 <h3>Возможности</h3>
                 <ul className="link-list">
                   {serviceLinks.map(({ text, href }) => (
-                    <li key={text} className="link-item">
-                      <a href={href}>{text}</a>
-                    </li>
+                    <li key={text} className="link-item"><a href={href}>{text}</a></li>
                   ))}
                 </ul>
               </div>
@@ -427,13 +201,8 @@ export default function Footer() {
                     <li key={text} className="link-item">
                       <a href={href}>
                         {hasIndicator ? (
-                          <span className="live-indicator">
-                            {text}
-                            <span className="pulse-dot"></span>
-                          </span>
-                        ) : (
-                          text
-                        )}
+                          <span className="live-indicator">{text}<span className="pulse-dot" /></span>
+                        ) : text}
                       </a>
                     </li>
                   ))}
@@ -443,26 +212,31 @@ export default function Footer() {
               <div className="link-column">
                 <h3>Контакты</h3>
                 <ul className="link-list">
-                  {contactInfo.map(({ icon: Icon, text, isAddress }) => (
-                    <li key={text} className="link-item">
-                      <a href="#" className="contact-item">
-                        <Icon className="contact-icon" size={20} />
-                        {isAddress ? <address style={{ fontStyle: "normal" }}>{text}</address> : <span>{text}</span>}
-                      </a>
-                    </li>
-                  ))}
+                  <li className="link-item">
+                    <a href={`mailto:${email}`} className="contact-item">
+                      <Mail className="contact-icon" size={16} /><span>{email}</span>
+                    </a>
+                  </li>
+                  <li className="link-item">
+                    <a href={`tel:${phone.replace(/\D/g, '')}`} className="contact-item">
+                      <Phone className="contact-icon" size={16} /><span>{phone}</span>
+                    </a>
+                  </li>
+                  <li className="link-item">
+                    <a href="#" className="contact-item">
+                      <MapPin className="contact-icon" size={16} /><span>{address}</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
 
           <div className="footer-bottom">
-            <p className="copyright">
-              © 2026 Молодёжь Верхнебуреинского района
-            </p>
+            <p className="copyright">© 2026 Молодёжь Верхнебуреинского района</p>
             <div className="footer-legal">
-              <a href="/privacy">Политика конфиденциальности</a>
-              <a href="/terms">Условия использования</a>
+              <a href="#documents">Документы</a>
+              <a href="/login">Личный кабинет</a>
             </div>
           </div>
         </div>

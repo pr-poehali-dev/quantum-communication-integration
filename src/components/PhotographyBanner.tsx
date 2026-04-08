@@ -2,6 +2,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { loadAuth } from "@/lib/auth"
+import { publicApi } from "@/lib/api"
 
 const PhotographyBanner: React.FC = () => {
   const navigate = useNavigate()
@@ -9,6 +10,12 @@ const PhotographyBanner: React.FC = () => {
   const [currentText, setCurrentText] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
+   
+  const [sc, setSc] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    publicApi.siteContent?.().then((data: Record<string, string>) => { if (data && !data.error) setSc(data) }).catch(() => {})
+  }, [])
 
   const texts = ["ГРАНТЫ.", "КАРЬЕРУ.", "ОТДЫХ.", "БУДУЩЕЕ."]
 
@@ -1070,8 +1077,8 @@ const PhotographyBanner: React.FC = () => {
 
           <div className="left-part">
             <h1>
-              <span>НАЙДИ</span>
-              <span>СВОЁ</span>
+              <span>{sc.hero_title_1 || 'НАЙДИ'}</span>
+              <span>{sc.hero_title_2 || 'СВОЁ'}</span>
               <span className="text d-flex">
                 {currentText.split("").map((char, i) => (
                   <span key={i} className="char">{char}</span>
@@ -1079,35 +1086,30 @@ const PhotographyBanner: React.FC = () => {
                 <span style={{ color: "#d33682", opacity: 0.7, marginLeft: 2 }}>|</span>
               </span>
             </h1>
-            <p>
-              Портал возможностей для молодёжи Верхнебуреинского муниципального района —
-              гранты, карьера, отдых и всё, что нужно для яркой жизни рядом с домом.
-            </p>
+            <p>{sc.hero_description || 'Портал возможностей для молодёжи Верхнебуреинского муниципального района — гранты, карьера, отдых и всё, что нужно для яркой жизни рядом с домом.'}</p>
             <div className="hero-badges">
               <span className="hero-badge">🏆 Гранты и конкурсы</span>
               <span className="hero-badge">💼 Трудоустройство</span>
               <span className="hero-badge">🎯 Досуг</span>
             </div>
-            <a className="book-link" href="#navigator">
-              <span className="linktext">Исследовать</span>
-              <span className="arrow">
-                <span />
-              </span>
+            <a className="book-link" href={sc.hero_btn_link || '#navigator'}>
+              <span className="linktext">{sc.hero_btn_text || 'Исследовать'}</span>
+              <span className="arrow"><span /></span>
             </a>
           </div>
 
           <div className="hero-stats">
             <div className="stat-card">
-              <div className="stat-number">14+</div>
-              <div className="stat-label">Программ</div>
+              <div className="stat-number">{sc.hero_stat_1_value || '14+'}</div>
+              <div className="stat-label">{sc.hero_stat_1_label || 'Программ'}</div>
             </div>
             <div className="stat-card">
-              <div className="stat-number">500+</div>
-              <div className="stat-label">Волонтёров</div>
+              <div className="stat-number">{sc.hero_stat_2_value || '500+'}</div>
+              <div className="stat-label">{sc.hero_stat_2_label || 'Волонтёров'}</div>
             </div>
             <div className="stat-card">
-              <div className="stat-number">12</div>
-              <div className="stat-label">Поселений</div>
+              <div className="stat-number">{sc.hero_stat_3_value || '12'}</div>
+              <div className="stat-label">{sc.hero_stat_3_label || 'Поселений'}</div>
             </div>
           </div>
         </section>
@@ -1117,25 +1119,18 @@ const PhotographyBanner: React.FC = () => {
         {/* ABOUT */}
         <section id="about" className="youth-section">
           <div className="section-label">О молодёжи</div>
-          <h2 className="section-title">Молодёжь — сила <span>района</span></h2>
+          <h2 className="section-title">{sc.about_title ? sc.about_title.replace(' района', '') : 'Молодёжь — сила'} <span>{sc.about_title ? 'района' : 'района'}</span></h2>
           <div className="about-grid">
             <div>
-              <p className="section-desc">
-                Верхнебуреинский район — это место, где каждый молодой человек может реализовать
-                свой потенциал. Мы объединяем активистов, волонтёров, спортсменов и творческих
-                людей для развития родного края.
-              </p>
-              <p className="section-desc" style={{ marginTop: 20 }}>
-                Молодёжная политика района направлена на поддержку инициатив, создание
-                рабочих мест и формирование комфортной среды для жизни и самореализации.
-              </p>
+              <p className="section-desc">{sc.about_text_1 || 'Верхнебуреинский район — это место, где каждый молодой человек может реализовать свой потенциал.'}</p>
+              <p className="section-desc" style={{ marginTop: 20 }}>{sc.about_text_2 || 'Молодёжная политика района направлена на поддержку инициатив, создание рабочих мест и формирование комфортной среды для жизни и самореализации.'}</p>
             </div>
             <div className="about-facts">
               {[
-                { icon: "👥", value: "8 000+", name: "молодых людей в районе" },
-                { icon: "🏅", value: "50+", name: "мероприятий в год" },
-                { icon: "💰", value: "3 млн ₽", name: "грантов ежегодно" },
-                { icon: "🤝", name: "активных объединений", value: "20+" },
+                { icon: "👥", value: sc.about_fact_1_value || "8 000+", name: sc.about_fact_1_label || "молодых людей в районе" },
+                { icon: "🏅", value: sc.about_fact_2_value || "50+", name: sc.about_fact_2_label || "мероприятий в год" },
+                { icon: "💰", value: sc.about_fact_3_value || "3 млн ₽", name: sc.about_fact_3_label || "грантов ежегодно" },
+                { icon: "🤝", value: sc.about_fact_4_value || "20+", name: sc.about_fact_4_label || "активных объединений" },
               ].map((f) => (
                 <div className="fact-card" key={f.name}>
                   <div className="fact-icon">{f.icon}</div>
@@ -1160,9 +1155,9 @@ const PhotographyBanner: React.FC = () => {
                 <span className="nav-card-tag" style={{ background: card.color }}>{card.tag}</span>
                 <div className="nav-card-title">{card.title}</div>
                 <div className="nav-card-desc">{card.description}</div>
-                <button className="nav-card-btn">
+                <a className="nav-card-btn" href={card.tag === 'Гранты' ? '#news' : card.tag === 'Карьера' ? '#events' : '#events'} style={{ textDecoration: 'none', display: 'inline-block' }}>
                   Подробнее →
-                </button>
+                </a>
               </div>
             ))}
           </div>
