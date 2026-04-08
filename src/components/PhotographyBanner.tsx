@@ -1034,7 +1034,10 @@ const PhotographyBanner: React.FC = () => {
 
         {/* NAV */}
         <nav className="youth-nav">
-          <img src="https://cdn.poehali.dev/projects/2bd4f7a6-eadb-486e-a916-098fef7014b8/bucket/5be3bb63-1298-4d23-affa-f0c8facf365c.png" alt="Молодёжь ВБР" style={{ height: 44, objectFit: 'contain' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <img src="https://cdn.poehali.dev/projects/2bd4f7a6-eadb-486e-a916-098fef7014b8/bucket/5be3bb63-1298-4d23-affa-f0c8facf365c.png" alt="Молодёжь ВБР" style={{ height: 40, objectFit: 'contain' }} />
+            <div className="nav-logo">Молодёжь <span>ВБР</span></div>
+          </div>
           <ul className="nav-links">
             {navLinks.map((link) => (
               <li key={link.href}>

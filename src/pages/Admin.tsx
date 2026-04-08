@@ -148,8 +148,9 @@ export default function Admin() {
       <div className="adm-wrap">
         <aside className="adm-sidebar">
           <div className="adm-logo">
-            <img src="https://cdn.poehali.dev/projects/2bd4f7a6-eadb-486e-a916-098fef7014b8/bucket/5be3bb63-1298-4d23-affa-f0c8facf365c.png" alt="Молодёжь ВБР" style={{ width: 120, objectFit: 'contain', filter: 'invert(1)', marginBottom: 6 }} />
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, margin: 0 }}>Панель администратора</p>
+            <img src="https://cdn.poehali.dev/projects/2bd4f7a6-eadb-486e-a916-098fef7014b8/bucket/5be3bb63-1298-4d23-affa-f0c8facf365c.png" alt="Молодёжь ВБР" style={{ width: 110, objectFit: 'contain', marginBottom: 4 }} />
+            <h2>Молодёжь ВБР</h2>
+            <p>Панель администратора</p>
           </div>
           <nav className="adm-nav">
             {navItems.map(item => (
