@@ -1,0 +1,40 @@
+{
+  "tests": [
+    {
+      "name": "Get news",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "news"},
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get events",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "events"},
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get volunteers",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "volunteers"},
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get contests",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "contests"},
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "partial"
+    }
+  ]
+}

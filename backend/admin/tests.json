@@ -1,0 +1,23 @@
+{
+  "tests": [
+    {
+      "name": "Get news as admin",
+      "method": "POST",
+      "path": "/",
+      "headers": {"X-User-Id": "1"},
+      "body": {"action": "news_list"},
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Reject without user id",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "news_list"},
+      "expectedStatus": 401,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

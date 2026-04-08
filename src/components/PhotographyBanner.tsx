@@ -1,7 +1,11 @@
 import type React from "react"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { loadAuth } from "@/lib/auth"
 
 const PhotographyBanner: React.FC = () => {
+  const navigate = useNavigate()
+  const { user } = loadAuth()
   const [currentText, setCurrentText] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -236,6 +240,23 @@ const PhotographyBanner: React.FC = () => {
         .nav-links a:hover {
           color: #d33682;
         }
+
+        .nav-login-btn {
+          padding: 8px 20px;
+          background: #d33682;
+          border: none;
+          border-radius: 20px;
+          color: #fff;
+          font-family: "Montserrat", sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: opacity 0.2s;
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        .nav-login-btn:hover { opacity: 0.85; }
 
         /* ---- HERO ---- */
         .info-section {
@@ -1021,6 +1042,9 @@ const PhotographyBanner: React.FC = () => {
               </li>
             ))}
           </ul>
+          <button className="nav-login-btn" onClick={() => navigate(user ? (user.role === 'admin' ? '/admin' : '/cabinet') : '/login')}>
+            {user ? 'Кабинет' : 'Войти'}
+          </button>
         </nav>
 
         {/* HERO */}
