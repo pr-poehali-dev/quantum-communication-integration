@@ -1,6 +1,5 @@
 const URLS = {
   auth: 'https://functions.poehali.dev/eec26f57-3f66-4498-81e6-15667826dddc',
-  volunteer: 'https://functions.poehali.dev/e5843606-7404-40e0-9342-12702f4786fa',
   api: 'https://functions.poehali.dev/4f6c15b1-704d-4f30-81af-c59c9df857b8',
   admin: 'https://functions.poehali.dev/5b029188-d86f-422e-932a-7d287204da49',
 }
@@ -31,26 +30,14 @@ async function call(url: string, body: object, userId?: number) {
 export const auth = {
   login: (email: string, password: string) =>
     call(URLS.auth, { action: 'login', email, password }),
-  register: (email: string, password: string, full_name: string) =>
-    call(URLS.auth, { action: 'register', email, password, full_name }),
 }
 
 export const publicApi = {
   news: () => call(URLS.api, { action: 'news' }),
   documents: () => call(URLS.api, { action: 'documents' }),
   events: () => call(URLS.api, { action: 'events' }),
-  volunteers: () => call(URLS.api, { action: 'volunteers' }),
   contests: () => call(URLS.api, { action: 'contests' }),
   siteContent: () => call(URLS.api, { action: 'site_content' }),
-}
-
-export const volunteerApi = {
-  profile: (userId: number) => call(URLS.volunteer, { action: 'profile' }, userId),
-  updateProfile: (userId: number, data: object) => call(URLS.volunteer, { action: 'profile_update', ...data }, userId),
-  myEvents: (userId: number) => call(URLS.volunteer, { action: 'my_events' }, userId),
-  registerEvent: (userId: number, event_id: number) => call(URLS.volunteer, { action: 'register_event', event_id }, userId),
-  contests: (userId: number) => call(URLS.volunteer, { action: 'contests' }, userId),
-  rating: (userId: number) => call(URLS.volunteer, { action: 'rating' }, userId),
 }
 
 export const adminApi = {
@@ -74,8 +61,4 @@ export const adminApi = {
   contestsDelete: (userId: number, id: number) => call(URLS.admin, { action: 'contests_delete', id }, userId),
   contentList: (userId: number) => call(URLS.admin, { action: 'content_list' }, userId),
   contentUpdate: (userId: number, items: {key: string, value: string}[]) => call(URLS.admin, { action: 'content_update', items }, userId),
-}
-
-export const publicApi2 = {
-  siteContent: () => call(URLS.api, { action: 'site_content' }),
 }

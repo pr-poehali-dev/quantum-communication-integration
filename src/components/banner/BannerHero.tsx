@@ -53,9 +53,9 @@ const BannerHero: React.FC<BannerHeroProps> = ({ navLinks, particles, currentTex
         </ul>
         <button
           className="nav-login-btn"
-          onClick={() => navigate(user ? (user.role === "admin" ? "/admin" : "/cabinet") : "/login")}
+          onClick={() => navigate(user?.role === "admin" ? "/admin" : "/login")}
         >
-          {user ? "Кабинет" : "Войти"}
+          {user?.role === "admin" ? "Панель управления" : "Войти"}
         </button>
       </nav>
 

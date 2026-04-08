@@ -6,7 +6,6 @@ const aboutLinks = [
   { text: "О молодёжи", href: "#about" },
   { text: "Навигатор возможностей", href: "#navigator" },
   { text: "Новости", href: "#news" },
-  { text: "Рейтинг волонтёров", href: "#volunteers" },
 ]
 
 const serviceLinks = [
@@ -19,7 +18,6 @@ const helpfulLinks = [
   { text: "Официальные документы", href: "#documents" },
   { text: "Молодёжная политика", href: "#news", hasIndicator: true },
   { text: "Мероприятия", href: "#events" },
-  { text: "Волонтёры", href: "#volunteers" },
 ]
 
 export default function Footer() {

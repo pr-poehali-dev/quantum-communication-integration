@@ -6,8 +6,7 @@ import Icon from '@/components/ui/icon'
 
 export default function Login() {
   const navigate = useNavigate()
-  const [tab, setTab] = useState<'login' | 'register'>('login')
-  const [form, setForm] = useState({ email: '', password: '', full_name: '' })
+  const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -16,15 +15,17 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      let res
-      if (tab === 'login') {
-        res = await authApi.login(form.email, form.password)
-      } else {
-        res = await authApi.register(form.email, form.password, form.full_name)
+      const res = await authApi.login(form.email, form.password)
+      if (res.error) {
+        setError(res.error === 'network_error' ? 'Сервер временно недоступен, попробуйте ещё раз' : res.error)
+        return
       }
-      if (res.error) { setError(res.error === 'network_error' ? 'Сервер временно недоступен, попробуйте ещё раз' : res.error); return }
+      if (res.user?.role !== 'admin') {
+        setError('Доступ только для администраторов')
+        return
+      }
       saveAuth(res.user, res.token)
-      navigate(res.user.role === 'admin' ? '/admin' : '/cabinet')
+      navigate('/admin')
     } catch {
       setError('Ошибка соединения с сервером')
     } finally {
@@ -58,29 +59,10 @@ export default function Login() {
           text-align: center;
           margin-bottom: 32px;
         }
-        .login-logo-icon {
-          width: 60px; height: 60px;
-          background: #d33682;
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 24px; font-weight: 900; color: #002b36;
-          margin: 0 auto 12px;
-        }
         .login-logo h1 {
           color: #fff; font-size: 20px; font-weight: 700; margin: 0;
         }
         .login-logo p { color: rgba(255,255,255,0.5); font-size: 13px; margin: 4px 0 0; }
-        .login-tabs {
-          display: flex; background: rgba(0,0,0,0.2); border-radius: 12px;
-          padding: 4px; margin-bottom: 28px;
-        }
-        .login-tab {
-          flex: 1; padding: 10px; border: none; background: transparent;
-          color: rgba(255,255,255,0.5); font-family: "Montserrat", sans-serif;
-          font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 10px;
-          transition: all 0.2s;
-        }
-        .login-tab.active { background: #d33682; color: #fff; }
         .login-field { margin-bottom: 16px; }
         .login-label { display: block; color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
         .login-input {
@@ -120,24 +102,13 @@ export default function Login() {
           <div className="login-logo">
             <img src="https://cdn.poehali.dev/projects/2bd4f7a6-eadb-486e-a916-098fef7014b8/bucket/5be3bb63-1298-4d23-affa-f0c8facf365c.png" alt="Молодёжь ВБР" style={{ width: 140, objectFit: 'contain' }} />
             <h1>Молодёжь ВБР</h1>
-            <p>Личный кабинет</p>
-          </div>
-          <div className="login-tabs">
-            <button className={`login-tab ${tab === 'login' ? 'active' : ''}`} onClick={() => setTab('login')}>Войти</button>
-            <button className={`login-tab ${tab === 'register' ? 'active' : ''}`} onClick={() => setTab('register')}>Регистрация</button>
+            <p>Панель администратора</p>
           </div>
           <form onSubmit={handle}>
             {error && <div className="login-error">{error}</div>}
-            {tab === 'register' && (
-              <div className="login-field">
-                <label className="login-label">Имя и фамилия</label>
-                <input className="login-input" placeholder="Иван Иванов" value={form.full_name}
-                  onChange={e => setForm(f => ({ ...f, full_name: e.target.value }))} required />
-              </div>
-            )}
             <div className="login-field">
               <label className="login-label">Email</label>
-              <input className="login-input" type="email" placeholder="you@example.com" value={form.email}
+              <input className="login-input" type="email" placeholder="admin@vbr.ru" value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))} required />
             </div>
             <div className="login-field">
@@ -146,7 +117,7 @@ export default function Login() {
                 onChange={e => setForm(f => ({ ...f, password: e.target.value }))} required />
             </div>
             <button className="login-btn" type="submit" disabled={loading}>
-              {loading ? 'Загрузка...' : tab === 'login' ? 'Войти' : 'Создать аккаунт'}
+              {loading ? 'Загрузка...' : 'Войти'}
             </button>
           </form>
         </div>

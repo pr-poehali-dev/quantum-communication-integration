@@ -15,13 +15,6 @@ interface NewsItem {
   desc: string
 }
 
-interface Volunteer {
-  rank: number
-  name: string
-  hours: number
-  badge: string
-}
-
 interface Event {
   date: { day: string; month: string }
   title: string
@@ -42,7 +35,6 @@ interface BannerSectionsProps {
   sc: Record<string, string>
   navigatorCards: NavigatorCard[]
   newsItems: NewsItem[]
-  volunteers: Volunteer[]
   events: Event[]
   documents: Document[]
 }
@@ -51,7 +43,6 @@ const BannerSections: React.FC<BannerSectionsProps> = ({
   sc,
   navigatorCards,
   newsItems,
-  volunteers,
   events,
   documents,
 }) => {
@@ -61,8 +52,6 @@ const BannerSections: React.FC<BannerSectionsProps> = ({
     { icon: "💰", value: sc.about_fact_3_value || "3 млн ₽", name: sc.about_fact_3_label || "грантов ежегодно" },
     { icon: "🤝", value: sc.about_fact_4_value || "20+", name: sc.about_fact_4_label || "активных объединений" },
   ]
-
-  const maxHours = volunteers[0]?.hours || 1
 
   return (
     <>
@@ -193,31 +182,7 @@ const BannerSections: React.FC<BannerSectionsProps> = ({
         </div>
       </section>
 
-      {/* VOLUNTEERS */}
-      <hr className="section-divider" />
-      <section id="volunteers" className="youth-section volunteers-section">
-        <div className="section-label">Волонтёрство</div>
-        <h2 className="section-title">Рейтинг <span>волонтёров</span></h2>
-        <p className="section-desc">Герои нашего района — люди, которые делают мир лучше каждый день.</p>
-        <div className="volunteers-table">
-          <div className="vol-header">
-            <span className="vol-header-cell">Место</span>
-            <span className="vol-header-cell">Имя</span>
-            <span className="vol-header-cell">Часов</span>
-            <span className="vol-header-cell">Прогресс</span>
-          </div>
-          {volunteers.map((v) => (
-            <div className="vol-row" key={v.rank}>
-              <span className="vol-rank">{v.badge}</span>
-              <span className="vol-name">{v.name}</span>
-              <span className="vol-hours">{v.hours}<span>ч</span></span>
-              <div className="vol-progress-bar">
-                <div className="vol-progress-fill" style={{ width: `${(v.hours / maxHours) * 100}%` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+
     </>
   )
 }

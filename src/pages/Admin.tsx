@@ -51,7 +51,7 @@ export default function Admin() {
 
   useEffect(() => {
     if (!user) { navigate('/login'); return }
-    if (user.role !== 'admin') { navigate('/cabinet'); return }
+    if (user.role !== 'admin') { navigate('/login'); return }
     loadTab(tab)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab])

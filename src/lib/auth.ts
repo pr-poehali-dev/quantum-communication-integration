@@ -2,7 +2,7 @@ export interface User {
   id: number
   email: string
   full_name: string
-  role: 'volunteer' | 'admin'
+  role: 'admin' | 'volunteer'
 }
 
 export interface AuthState {

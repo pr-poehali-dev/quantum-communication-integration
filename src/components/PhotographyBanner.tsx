@@ -11,7 +11,6 @@ const navLinks = [
   { label: "События", href: "#events" },
   { label: "Документы", href: "#documents" },
   { label: "Новости", href: "#news" },
-  { label: "Волонтёры", href: "#volunteers" },
 ]
 
 const navigatorCards = [
@@ -57,14 +56,6 @@ const newsItems = [
     title: "Новые вакансии для молодых специалистов",
     desc: "Работодатели района приглашают молодых специалистов в сфере IT, медицины и образования.",
   },
-]
-
-const volunteers = [
-  { rank: 1, name: "Анна Соколова", hours: 312, badge: "🥇" },
-  { rank: 2, name: "Дмитрий Петров", hours: 278, badge: "🥈" },
-  { rank: 3, name: "Мария Иванова", hours: 245, badge: "🥉" },
-  { rank: 4, name: "Алексей Краснов", hours: 198, badge: "⭐" },
-  { rank: 5, name: "Екатерина Лебедь", hours: 176, badge: "⭐" },
 ]
 
 const events = [
@@ -198,7 +189,6 @@ const PhotographyBanner: React.FC = () => {
           sc={sc}
           navigatorCards={navigatorCards}
           newsItems={newsItems}
-          volunteers={volunteers}
           events={events}
           documents={documents}
         />

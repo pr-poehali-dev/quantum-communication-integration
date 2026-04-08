@@ -119,87 +119,6 @@ const EventsVolunteersStyles = `
     .events-grid { grid-template-columns: 1fr; }
   }
 
-  /* ---- VOLUNTEERS ---- */
-  .volunteers-section {
-    background: rgba(0,0,0,0.2);
-  }
-
-  .volunteers-table {
-    margin-top: 50px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .vol-header {
-    display: grid;
-    grid-template-columns: 80px 1fr 180px 100px;
-    padding: 16px 28px;
-    background: rgba(211,54,130,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .vol-header-cell {
-    font-family: "Montserrat", sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .vol-row {
-    display: grid;
-    grid-template-columns: 80px 1fr 180px 100px;
-    padding: 20px 28px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    align-items: center;
-    transition: background 0.3s;
-  }
-
-  .vol-row:last-child { border-bottom: none; }
-  .vol-row:hover { background: rgba(211,54,130,0.05); }
-
-  .vol-rank {
-    font-family: "Montserrat", sans-serif;
-    font-size: 28px;
-  }
-
-  .vol-name {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    color: #fff;
-  }
-
-  .vol-hours {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: #d33682;
-  }
-
-  .vol-hours span {
-    font-size: 12px;
-    color: rgba(255,255,255,0.4);
-    font-weight: 400;
-    margin-left: 4px;
-  }
-
-  .vol-progress-bar {
-    height: 6px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .vol-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #d33682, #268bd2);
-    border-radius: 3px;
-  }
-
   /* ---- DIVIDER ---- */
   .section-divider {
     border: none;
@@ -215,9 +134,6 @@ const EventsVolunteersStyles = `
     .nav-links { display: none; }
     .about-grid, .navigator-grid, .news-grid { grid-template-columns: 1fr; }
     .youth-section { padding: 70px 24px; }
-    .vol-header, .vol-row { grid-template-columns: 60px 1fr 120px; }
-    .vol-row > *:last-child { display: none; }
-    .vol-header > *:last-child { display: none; }
   }
 `
 
