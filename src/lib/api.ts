@@ -6,13 +6,21 @@ const URLS = {
 }
 
 async function call(url: string, body: object, userId?: number) {
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  if (userId) headers['X-User-Id'] = String(userId)
-  const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) })
-  const text = await res.text()
-  const data = JSON.parse(text)
-  if (typeof data === 'string') return JSON.parse(data)
-  return data
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (userId) headers['X-User-Id'] = String(userId)
+    const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) })
+    const text = await res.text()
+    try {
+      const data = JSON.parse(text)
+      if (typeof data === 'string') return JSON.parse(data)
+      return data
+    } catch {
+      return { error: 'parse_error' }
+    }
+  } catch {
+    return { error: 'network_error' }
+  }
 }
 
 export const auth = {
